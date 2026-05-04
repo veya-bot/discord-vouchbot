@@ -30,8 +30,8 @@ A powerful, lightweight Discord bot with a secure persistent database, designed 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/vouchbot-standalone.git
-   cd vouchbot-standalone
+   git clone https://github.com/veya-bot/discord-vouchbot.git
+   cd discord-vouchbot
    ```
 
 2. **Install dependencies:**
