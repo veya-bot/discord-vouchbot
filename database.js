@@ -59,7 +59,7 @@ class DatabaseManager {
     }
 
     getBackupVouches() {
-        const filePath = path.join(this.basePath, "backup.json");
+        const filePath = path.join(this.basePath, "vouches.json");
         if (!fs.existsSync(filePath)) return [];
         try {
             return JSON.parse(fs.readFileSync(filePath, 'utf-8'));

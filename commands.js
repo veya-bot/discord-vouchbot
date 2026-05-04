@@ -38,7 +38,7 @@ const commands = [
 
     new SlashCommandBuilder()
         .setName('restore')
-        .setDescription('Restore vouches from backup.json (Admin only)')
+        .setDescription('Restore vouches from vouches.json (Admin only)')
 ];
 
 async function handleInteraction(interaction) {
@@ -125,7 +125,7 @@ async function handleInteraction(interaction) {
         }
 
         const backup = db.getBackupVouches();
-        if (backup.length === 0) return interaction.reply({ content: "❌ No `backup.json` found in the data folder!", ephemeral: true });
+        if (backup.length === 0) return interaction.reply({ content: "❌ No `vouches.json` found in the data folder!", ephemeral: true });
 
         await interaction.reply({ content: `🔄 Restoring ${backup.length} vouches...`, ephemeral: true });
 
