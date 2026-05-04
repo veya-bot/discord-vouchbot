@@ -34,7 +34,11 @@ const commands = [
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addStringOption(opt => opt.setName('action').setDescription('Action').setRequired(true).addChoices(
             { name: 'Enable', value: 'enable' }, { name: 'Disable', value: 'disable' }
-        ))
+        )),
+
+    new SlashCommandBuilder()
+        .setName('restore')
+        .setDescription('Restore vouches from backup.json (Admin only)')
 ];
 
 async function handleInteraction(interaction) {
@@ -113,6 +117,31 @@ async function handleInteraction(interaction) {
             await interaction.reply({ content: "✅ Sticky message disabled", ephemeral: true });
         }
         db.saveConfig(guildId, serverConfig);
+    }
+
+    if (commandName === 'restore') {
+        if (!config.ADMIN_IDS.includes(user.id)) {
+            return interaction.reply({ content: "❌ Only bot admins can use this command!", ephemeral: true });
+        }
+
+        const backup = db.getBackupVouches();
+        if (backup.length === 0) return interaction.reply({ content: "❌ No `backup.json` found in the data folder!", ephemeral: true });
+
+        await interaction.reply({ content: `🔄 Restoring ${backup.length} vouches...`, ephemeral: true });
+
+        for (const v of backup) {
+            const embed = createVouchEmbed({
+                customerId: v.customer_id || v.customerId,
+                sellerId: v.seller_id || v.sellerId,
+                product: v.product,
+                stars: v.stars,
+                note: v.note,
+                imageUrl: v.image_url || v.imageUrl
+            });
+            await interaction.channel.send({ embeds: [embed] });
+        }
+
+        await interaction.followUp({ content: "✅ Restore complete!", ephemeral: true });
     }
 }
 

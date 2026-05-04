@@ -57,6 +57,16 @@ class DatabaseManager {
         const filePath = path.join(this.getServerPath(guildId), "config.json");
         fs.writeFileSync(filePath, JSON.stringify(config, null, 2));
     }
+
+    getBackupVouches() {
+        const filePath = path.join(this.basePath, "backup.json");
+        if (!fs.existsSync(filePath)) return [];
+        try {
+            return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        } catch (e) {
+            return [];
+        }
+    }
 }
 
 module.exports = new DatabaseManager();

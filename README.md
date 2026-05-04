@@ -63,6 +63,7 @@ A powerful, lightweight Discord bot with a secure persistent database, designed 
 | `/profile` | View a user's vouch history and rating | Everyone |
 | `/leaderboard` | View the top 10 sellers | Everyone |
 | `/sticky` | Enable/Disable the sticky message | Manage Server |
+| `/restore` | Restore vouches from backup.json | Bot Admin |
 
 ---
 
